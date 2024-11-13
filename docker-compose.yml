@@ -1,76 +1,36 @@
-# version: '3.9'
-
-# services:
-#   db:
-#     build: ./db
-#     # image: mysql:5.7  # It's better to use a pre-built image for databases
-#     environment:
-#       MYSQL_ROOT_PASSWORD: root
-#       MYSQL_DATABASE: quotesdb
-#       MYSQL_USER: user
-#       MYSQL_PASSWORD: password
-#     # Removed volumes configuration as EB doesn't support named volumes
-
-#   api:
-#     build: ./api
-#     depends_on:
-#       - db
-#     environment:
-#       MYSQL_HOST: db
-#       MYSQL_USER: user
-#       MYSQL_PASSWORD: password
-#       MYSQL_DB: quotesdb
-#     # Removed ports configuration; EB handles port binding
-
-#   app:
-#     build: ./app
-#     depends_on:
-#       - api
-#     # Changed to map to port 80, which is what the EB load balancer will expect for HTTP traffic
-#     ports:
-#       - 80:5002  # Assuming your app.py is set to listen on port 5002
-
-# # Removed volumes section
-
-
-
-
-# ==== For Development works ======
 version: '3.9'
 
 services:
+  # MongoDB service
   db:
     container_name: quotes-db
-    build: ./db
+    image: mongo:latest  # Use the official MongoDB image
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: quotesdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MONGO_INITDB_DATABASE: quotesdb  # Initialize the database name (quotesdb)
     volumes:
-      - db-data:/var/lib/mysql
+      - db-data:/data/db  # Persistent storage for MongoDB data
 
+  # API service (your Flask app)
   api:
     container_name: quotes-api
     build: ./api
     depends_on:
-      - db
+      - db  # Ensure the API waits for the database to be available
     environment:
-      MYSQL_HOST: db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DB: quotesdb
+      MONGO_URI: mongodb://db:27017/quotesdb  # MongoDB connection URI
     ports:
-      - "5001:5001"
+      - "5001:5001"  # Expose the API on port 5001
 
+  # Frontend service (your app)
   app:
     container_name: quotes-frontend
     build: ./app
     depends_on:
-      - api
+      - api  # Ensure the app waits for the API to be available
     ports:
-      # - "80:5000" # for beanstalk
-      - "5002:5002"
+      - "5002:5002"  # Expose the frontend on port 5002
 
+# Persistent volume for MongoDB data
 volumes:
   db-data:
+    driver: local
