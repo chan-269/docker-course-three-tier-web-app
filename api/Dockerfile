@@ -3,7 +3,7 @@ FROM python:3.11-slim
 
 WORKDIR /api
 
-# Install necessary dependencies (no MySQL, but some basic packages)
+# Install necessary dependencies (no Mongo, but some basic packages)
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y gcc pkg-config libssl-dev libcurl4-openssl-dev libsasl2-dev \
