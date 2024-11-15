@@ -5,7 +5,7 @@ import os
 api = Flask(__name__)
 
 # MongoDB configurations
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://172.19.0.2:27017/")
 client = MongoClient(MONGO_URI)
 
 # Database and collection configuration
