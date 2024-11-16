@@ -40,4 +40,4 @@ def add_quote():
 if __name__ == "__main__":
     # Use the PORT environment variable, default to 5001 for local development
     port = int(os.environ.get("PORT", 5001))
-    api.run(host="3.110.123.15 ", port=5001 , debug=true)
+    api.run(host=" 15.206.186.58 ", port=5001 , debug=true)
