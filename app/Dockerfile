@@ -1,10 +1,17 @@
-# Use a lightweight Python image
+# Use a lightweight Python base image
 FROM python:3.11-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy only the requirements file first to leverage Docker cache
+# Install system dependencies required for Python packages (optional if required)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libssl-dev \
+    libsasl2-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy only the requirements file first to leverage Docker's cache
 COPY requirements.txt .
 
 # Install Python dependencies
