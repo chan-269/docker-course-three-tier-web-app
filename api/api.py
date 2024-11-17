@@ -5,7 +5,7 @@ import os
 api = Flask(__name__)
 
 # MongoDB configurations
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://0.0.0.0:27017/")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
 
 # Database and collection configuration
@@ -20,12 +20,6 @@ def get_quotes():
     return jsonify(quotes), 200
 
 
-@api.route("/health", methods=["GET"])
-def health():
-    """Health check endpoint."""
-    return "OK", 200
-
-
 @api.route("/api/quotes", methods=["POST"])
 def add_quote():
     """Add a new quote to MongoDB."""
@@ -35,14 +29,23 @@ def add_quote():
 
     content = data["quote"]
     author = data["author"]
-    
+
     # Insert a new quote into MongoDB
     result = quotes_collection.insert_one({"quote": content, "author": author})
-    
-    return jsonify({"id": str(result.inserted_id), "quote": content, "author": author}), 201
+
+    return (
+        jsonify({"id": str(result.inserted_id), "quote": content, "author": author}),
+        201,
+    )
+
+
+@api.route("/health", methods=["GET"])
+def health():
+    """Health check endpoint."""
+    return jsonify({"status": "healthy"}), 200
 
 
 if __name__ == "__main__":
     # Use the PORT environment variable, default to 5001 for local development
     port = int(os.environ.get("PORT", 5001))
-    api.run(host="0.0.0.0", port=port, debug=True)
+    api.run(host="0.0.0.0", port=port)
