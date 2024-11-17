@@ -1,32 +1,36 @@
-# Run the mangodb db
-docker run --name mongodb-container -d mongo:latest  # Start MongoDB container
-  # This should start a mysql connection
+# Run the mysql db
+docker run id/name_of_image  # This should start a mysql connection
 
 # While the connection is open, open a new terminal so we can interact with bash in the container
-docker exec -it mongodb-container /bin/bash  # Enter the container
+docker exec -it containername/id /bin/bash # or /bin/sh
 
 
 # We should now be inside our container
 ls # check the file structure, there should be all the files and folders
 
-cd docker-entrypoint-init.d  # Go to initialization scripts folder (if present)
+# CD into the 'docker-entrypoint-init.d' to verify the .sql file in there
+cd docker-entrypoint-init.d  
 
-# CD out of the folder, and acces mango
+# CD out of the folder, and acces mysql
 cd ..
+ mysql -uroot -proot  # Log into MySQL as root user with the root password
+# attach the password, which is root
 
-exit  # Exit the container shell
-docker exec -it mongodb-container mongo  # Connect to MongoDB
+# Now we are using mysql database, so we can check the databaes, tables etc..
+# Let's show all databases available
+show databases;
 
-show databases;  # List all MongoDB databases
+# Pick our database
+use quote;
 
-use quote;  # Switch to the 'quote' database
+# Show tables (shows quotes table)
+show tables;
 
-show collections;  # List all collections (tables) in the 'quote' database
+# Query the table (should see some data)
+select * from quotes;
 
-db.quotes.find();  # Query all documents in the 'quotes' collection
-
-
-
+troubleshoot
+mysql -uroot -proot quotesdb < /docker-entrypoint-initdb.d/init.sql
 
 
 
