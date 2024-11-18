@@ -19,7 +19,7 @@ docker exec -it mongodb-container mongo  # Connect to MongoDB
 
 show databases;  # List all MongoDB databases
 
-use quote;  # Switch to the 'quote' database
+use quotedb;  # Switch to the 'quote' database
 
 show collections;  # List all collections (tables) in the 'quote' database
 
