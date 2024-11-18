@@ -22,7 +22,7 @@ mongosh --host 172.18.0.2 --port 27017      command to coonect mongosedb
 
 show databases;  # List all MongoDB databases
 
-use quotedb;  # Switch to the 'quote' database
+use quotesdb;  # Switch to the 'quote' database
 
 show collections;  # List all collections (tables) in the 'quote' database
 
