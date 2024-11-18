@@ -12,6 +12,7 @@ RUN apt-get update \
        pkg-config \
        libssl-dev \
        libsasl2-dev \
+       gnupg \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the dependencies file first for better Docker caching
