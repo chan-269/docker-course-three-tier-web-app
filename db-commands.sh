@@ -17,6 +17,9 @@ cd ..
 exit  # Exit the container shell
 docker exec -it mongodb-container mongo  # Connect to MongoDB
 
+
+mongosh --host 172.18.0.2 --port 27017      command to coonect mongosedb 
+
 show databases;  # List all MongoDB databases
 
 use quotedb;  # Switch to the 'quote' database
