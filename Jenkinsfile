@@ -9,7 +9,7 @@ pipeline {
     }
     triggers {
         //git('main') {  // Trigger when commits are made to the 'main' branch in the repository
-            triggerOnCommit()
+            githubPush()
         }
     
     stages {
