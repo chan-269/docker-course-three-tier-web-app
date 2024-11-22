@@ -8,10 +8,10 @@ pipeline {
         DOCKER_CREDENTIALS = "docker"
     }
     triggers {
-        git('main') {  // Trigger when commits are made to the 'main' branch in the repository
+        //git('main') {  // Trigger when commits are made to the 'main' branch in the repository
             triggerOnCommit()
         }
-    } 
+    
     stages {
         stage('Checkout') {
             steps {
