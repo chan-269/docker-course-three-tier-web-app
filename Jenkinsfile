@@ -7,12 +7,10 @@ pipeline {
         IMAGE_TAG = "latest"
         DOCKER_CREDENTIALS = "docker"
     }
-
     triggers {
-        // Automatically trigger the build when a push event happens in GitHub
-        githubPush()  // Triggers build via GitHub webhook
-    }
-
+        git('main') {  // Trigger when commits are made to the 'main' branch in the repository
+            triggerOnCommit()
+        }
     stages {
         stage('Checkout') {
             steps {
