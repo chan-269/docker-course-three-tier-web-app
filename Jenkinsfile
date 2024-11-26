@@ -23,12 +23,12 @@ pipeline {
             steps {
                 script {
                     // Build Docker images for API, App, and DB
-                    def image = docker.build("docker.io/chandanuikey97/backup_api:latest", "./api")
+                    def image = docker.build("docker.io/chandanuikey97/backup_api_backend:latest", "./api")
                     docker.withRegistry('https://index.docker.io/v1/', "docker") {
                         image.push()
                     }
 
-                    def front_image = docker.build("docker.io/chandanuikey97/backup_app:latest", "./app")
+                    def front_image = docker.build("docker.io/chandanuikey97/backup_app_frontend:latest", "./app")
                     docker.withRegistry('https://index.docker.io/v1/', "docker") {
                         front_image.push()
                     }
