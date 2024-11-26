@@ -33,7 +33,7 @@ pipeline {
                         front_image.push()
                     }
 
-                    def db_image = docker.build("docker.io/chandanuikey97/backup_mongo_db:latest", "./db")
+                    def db_image = docker.build("docker.io/chandanuikey97/backup_mongodb:latest", "./db")
                     docker.withRegistry('https://index.docker.io/v1/', "docker") {
                         db_image.push()
                     }
